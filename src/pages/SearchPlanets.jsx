@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useContext } from 'react';
+import FilterNumber from '../components/FilterNumber';
 import FilterText from '../components/FilterText';
 import Table from '../components/Table';
 import { PlanetsContext } from '../context/PlanetsProvider';
@@ -19,6 +20,7 @@ function SearchPlanets() {
   return (
     <div>
       <FilterText />
+      <FilterNumber />
       <Table />
     </div>
   );

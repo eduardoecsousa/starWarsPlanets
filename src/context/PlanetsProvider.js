@@ -9,17 +9,17 @@ export const PlanetsContext = createContext();
 function PlanetsProvider({ children }) {
   const [allPlanets, setAllplanets] = useState([]);
   const { makeFetch, isLoading } = useFetch();
-  const { planetsFilter, makeFilter } = useFilterText();
+  const { planetsFilter, makeFilterText, makeFilterNumber } = useFilterText();
   const url = 'https://swapi.dev/api/planets';
   const doTheFetch = async () => {
-    console.log(children);
     const result = await makeFetch(url);
-    makeFilter('', result.results);
+    console.log(result);
+    makeFilterText('', result.results);
     setAllplanets(result.results);
   };
   const values = useMemo(() => ({
-    allPlanets, planetsFilter, isLoading, doTheFetch, makeFilter,
-  }), [planetsFilter, isLoading, makeFilter]);
+    allPlanets, planetsFilter, isLoading, doTheFetch, makeFilterText, makeFilterNumber,
+  }), [planetsFilter, isLoading, makeFilterText, makeFilterNumber]);
 
   return (
     <PlanetsContext.Provider value={ values }>

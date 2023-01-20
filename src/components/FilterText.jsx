@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { PlanetsContext } from '../context/PlanetsProvider';
 
 function FilterText() {
-  const { allPlanets, makeFilter } = useContext(PlanetsContext);
+  const { allPlanets, makeFilterText } = useContext(PlanetsContext);
   const [searchText, setSeatchText] = useState('');
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function FilterText() {
   const handleChange = ({ target }) => {
     const { value } = target;
     setSeatchText(value);
-    makeFilter(value, allPlanets);
+    makeFilterText(value, allPlanets);
   };
 
   return (
