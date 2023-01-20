@@ -1,17 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import FilterText from '../components/FilterText';
 import Table from '../components/Table';
-import useFetch from '../hooks/useFetch';
+import { PlanetsContext } from '../context/PlanetsProvider';
 
 function SearchPlanets() {
-  const [planetsStarWars, setPlanetsStarWars] = useState({});
-  const url = 'https://swapi.dev/api/planets';
-  const { makeFetch, isLoading } = useFetch();
+  const { isLoading, doTheFetch } = useContext(PlanetsContext);
 
   useEffect(() => {
-    const doTheFetch = async () => {
-      setPlanetsStarWars(await makeFetch(url));
-    };
     doTheFetch();
   }, []);
 
@@ -22,7 +18,8 @@ function SearchPlanets() {
   }
   return (
     <div>
-      <Table planets={ planetsStarWars } />
+      <FilterText />
+      <Table />
     </div>
   );
 }

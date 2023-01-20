@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { PlanetsContext } from '../context/PlanetsProvider';
 
-function Table({ planets }) {
+function Table() {
+  const { planetsFilter } = useContext(PlanetsContext);
   const arrayTitles = [
     'Name',
     'Rotation Period',
@@ -18,8 +19,6 @@ function Table({ planets }) {
     'URL',
   ];
 
-  const { results } = planets;
-
   return (
     <div>
       <table border="1">
@@ -29,7 +28,7 @@ function Table({ planets }) {
           </tr>
         </thead>
         <tbody>
-          {results.map((planet) => (
+          {planetsFilter.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>
@@ -51,11 +50,5 @@ function Table({ planets }) {
     </div>
   );
 }
-
-Table.propTypes = {
-  planets: PropTypes.shape({
-    results: PropTypes.arrayOf(PropTypes.shape({})),
-  }).isRequired,
-};
 
 export default Table;
