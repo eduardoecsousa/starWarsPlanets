@@ -13,7 +13,6 @@ function PlanetsProvider({ children }) {
   const url = 'https://swapi.dev/api/planets';
   const doTheFetch = async () => {
     const result = await makeFetch(url);
-    console.log(result);
     makeFilterText('', result.results);
     setAllplanets(result.results);
   };

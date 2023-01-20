@@ -16,13 +16,18 @@ const optionComparison = [
 ];
 
 function FilterNumber() {
-  const { allPlanets, makeFilterNumber } = useContext(PlanetsContext);
+  const { makeFilterNumber } = useContext(PlanetsContext);
+  const [arrayColumn, setArrayColumn] = useState(optionsColumns);
+  const [columnSelect, setColumnSelect] = useState([]);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valueNumber, setValueNumber] = useState(0);
 
   const handleClick = () => {
-    makeFilterNumber(column, comparison, valueNumber, allPlanets);
+    makeFilterNumber(column, comparison, valueNumber);
+    const filterView = `${column} ${comparison} ${valueNumber}`;
+    setColumnSelect([...columnSelect, filterView]);
+    setArrayColumn(arrayColumn.filter(({ name }) => name !== column));
   };
 
   return (
@@ -35,7 +40,7 @@ function FilterNumber() {
           value={ column }
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          {optionsColumns.map((option) => (
+          {arrayColumn.map((option) => (
             <option key={ option.value } value={ option.value }>{option.name}</option>
           ))}
         </select>
@@ -70,6 +75,13 @@ function FilterNumber() {
       >
         Filtrar
       </button>
+      <div>
+        {columnSelect.map((filterSelect) => (
+          <div key={ filterSelect }>
+            <p>{filterSelect}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
