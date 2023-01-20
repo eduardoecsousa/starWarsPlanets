@@ -9,17 +9,17 @@ function useFilterText() {
     setPlanetsFilter(filterPlanets);
   };
 
-  const makeFilterNumber = (column, comparison, value, planets) => {
+  const makeFilterNumber = (column, comparison, value) => {
     if (comparison === 'maior que') {
-      const filterNumberLarge = planets
+      const filterNumberLarge = planetsFilter
         .filter((planet) => Number(planet[column]) > value);
       setPlanetsFilter(filterNumberLarge);
     } else if (comparison === 'menor que') {
-      const filterNumberLittle = planets
+      const filterNumberLittle = planetsFilter
         .filter((planet) => Number(planet[column]) < value);
       setPlanetsFilter(filterNumberLittle);
     } else {
-      const filterNumberEqual = planets
+      const filterNumberEqual = planetsFilter
         .filter((planet) => Number(planet[column]) === value * 1);
       setPlanetsFilter(filterNumberEqual);
     }
