@@ -1,8 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { PlanetsContext } from '../context/PlanetsProvider';
 
 function Table() {
-  const { planetsFilter } = useContext(PlanetsContext);
+  const { planetsFilterScreen } = useContext(PlanetsContext);
+  const [planets, setPlanets] = useState([]);
+  useEffect(() => {
+    setPlanets(planetsFilterScreen);
+  }, [planetsFilterScreen]);
   const arrayTitles = [
     'Name',
     'Rotation Period',
@@ -28,7 +32,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planetsFilter.map((planet) => (
+          {planets.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>

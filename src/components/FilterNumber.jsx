@@ -1,13 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { FiltersContext } from '../context/FilterProvider';
 import { PlanetsContext } from '../context/PlanetsProvider';
-
-const optionsColumns = [
-  { name: 'population', value: 'population' },
-  { name: 'orbital_period', value: 'orbital_period' },
-  { name: 'diameter', value: 'diameter' },
-  { name: 'rotation_period', value: 'rotation_period' },
-  { name: 'surface_water', value: 'surface_water' },
-];
+import imageDelete from '../img/delete-xxl.png';
 
 const optionComparison = [
   { name: 'maior que', value: 'maior que' },
@@ -16,18 +10,35 @@ const optionComparison = [
 ];
 
 function FilterNumber() {
-  const { makeFilterNumber } = useContext(PlanetsContext);
-  const [arrayColumn, setArrayColumn] = useState(optionsColumns);
-  const [columnSelect, setColumnSelect] = useState([]);
+  const { makeFilter,
+    allPlanets } = useContext(PlanetsContext);
+  const {
+    arrayColumn, columnSelect, addFilter, removeFilter, removeAll,
+  } = useContext(FiltersContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valueNumber, setValueNumber] = useState(0);
+  const [filters, setFilters] = useState([]);
 
   const handleClick = () => {
-    makeFilterNumber(column, comparison, valueNumber);
-    const filterView = `${column} ${comparison} ${valueNumber}`;
-    setColumnSelect([...columnSelect, filterView]);
-    setArrayColumn(arrayColumn.filter(({ name }) => name !== column));
+    const filterView = { column, comparison, valueNumber };
+    setFilters([...filters, filterView]);
+    makeFilter('', allPlanets, [...filters, filterView]);
+    addFilter(filterView);
+    setColumn('population');
+    setComparison('maior que');
+    setValueNumber(0);
+  };
+
+  const deleteFilter = (eleDelete) => {
+    setFilters(filters.filter((e) => e.column !== eleDelete.column));
+    makeFilter('', allPlanets, filters.filter((e) => e.column !== eleDelete.column));
+    removeFilter(eleDelete);
+  };
+
+  const deleteAll = () => {
+    removeAll();
+    makeFilter('', allPlanets, []);
   };
 
   return (
@@ -76,12 +87,22 @@ function FilterNumber() {
         Filtrar
       </button>
       <div>
-        {columnSelect.map((filterSelect) => (
-          <div key={ filterSelect }>
-            <p>{filterSelect}</p>
+        {columnSelect.map((select) => (
+          <div key={ select.column } data-testid="filter">
+            <p>{`${select.column} ${select.comparison} ${select.valueNumber}`}</p>
+            <button type="button" onClick={ () => deleteFilter(select) }>
+              <img src={ imageDelete } alt="icone-delete" className="icon-delete" />
+            </button>
           </div>
         ))}
       </div>
+      <button
+        type="button"
+        onClick={ deleteAll }
+        data-testid="button-remove-filters"
+      >
+        REMOVER FILTRO
+      </button>
     </div>
   );
 }
