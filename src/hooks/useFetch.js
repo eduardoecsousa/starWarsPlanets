@@ -2,33 +2,18 @@ import { useState } from 'react';
 
 function useFetch() {
   const [isLoading, setIsLoading] = useState(true);
-  const [errors, setErrors] = useState(null);
 
   const makeFetch = async (url) => {
-    try {
-      setIsLoading(true);
+    setIsLoading(true);
 
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        const apiError = new Error(
-          `A resposta da url ${url} veio com o status ${response.status}`,
-        );
-        apiError.response = response;
-        throw apiError;
-      }
-
-      const json = await response.json();
-      return json;
-    } catch (error) {
-      setErrors(error);
-    } finally {
-      setIsLoading(false);
-    }
+    const response = await fetch(url);
+    const json = await response.json();
+    setIsLoading(false);
+    return json;
   };
 
   return {
-    makeFetch, isLoading, errors,
+    makeFetch, isLoading,
   };
 }
 

@@ -90,7 +90,11 @@ function FilterNumber() {
         {columnSelect.map((select) => (
           <div key={ select.column } data-testid="filter">
             <p>{`${select.column} ${select.comparison} ${select.valueNumber}`}</p>
-            <button type="button" onClick={ () => deleteFilter(select) }>
+            <button
+              type="button"
+              onClick={ () => deleteFilter(select) }
+              data-testid="delete-one-filter"
+            >
               <img src={ imageDelete } alt="icone-delete" className="icon-delete" />
             </button>
           </div>

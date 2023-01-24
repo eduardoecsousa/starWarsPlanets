@@ -15,7 +15,7 @@ function SearchPlanets() {
 
   if (isLoading) {
     return (
-      <p>Carregando...</p>
+      <p data-testid="loading">Carregando...</p>
     );
   }
   return (

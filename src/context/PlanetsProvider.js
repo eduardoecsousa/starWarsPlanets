@@ -14,13 +14,13 @@ function PlanetsProvider({ children }) {
   const [planetsFilterScreen, setPlanetsFilterScreen] = useState([]);
   const doTheFetch = async () => {
     const result = await makeFetch(url);
+
     setAllplanets(result.results);
     makeFilter('', result.results, []);
   };
 
   useEffect(() => {
     setPlanetsFilterScreen(planetsFilter);
-    console.log(planetsFilter);
   }, [planetsFilter, orderPlanets]);
 
   const values = useMemo(() => ({
