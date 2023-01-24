@@ -27,20 +27,18 @@ function useFilterText() {
 
   const orderPlanets = ({ order }) => {
     console.log(order);
-    const NUMBER = -1;
     const { column, sort } = order;
     if (sort === 'ASC') {
-      const orderASC = planetsFilter
-        .sort((a, b) => {
-          if (a[column] < b[column]) {
-            return NUMBER;
-          }
-          return true;
-        });
-      setPlanetsFilter(orderASC);
+      const orderASC = () => {
+        const primary = planetsFilter.filter((option) => option[column] === 'unknown');
+        const second = planetsFilter.filter((option) => option[column] !== 'unknown')
+          .sort((a, b) => Number(a[column]) - Number(b[column]));
+        return second.concat(primary);
+      };
+      setPlanetsFilter([...orderASC()]);
     } else {
-      setPlanetsFilter(planetsFilter
-        .sort((a, b) => a[column] < b[column]));
+      setPlanetsFilter([...planetsFilter
+        .sort((a, b) => b[column] - a[column])]);
     }
     console.log(planetsFilter);
   };
